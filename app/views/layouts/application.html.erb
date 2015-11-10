@@ -1,14 +1,62 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Workspace</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
+
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <nav class="top-bar" data-topbar role="navigation">
+      <ul class="title-area">
+        <li class="name">
+          <h1><a href="localhost:3000">Trello</a></h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+      </ul>
+
+
+    <section class="top-bar-section">
+      <!-- Right Nav Section -->
+      <ul class="right">
+        <% if user_signed_in? %>
+        <li class="active">
+            <%= link_to "Cerrar sesion", destroy_user_session_path, method: :delete %>
+        </li>
+        <%else%>
+          <li class="active">
+              <%= link_to "Iniciar sesion", new_user_session_path %>
+          </li>
+          <li class="active">
+            <%= link_to "Crear cuenta", new_user_registration_path %>
+          </li>
+        <%end%>
+      </ul>
+
+    <ul class="left">
+      <li class="co-md">
+        <%= link_to "Tasks", root_path%>
+      </li>
+
+      <li class="co-md">
+        <%= link_to "Users", users_path%>
+      </li>
+    </ul>
+
+  </section>
+</nav>
 <%= yield %>
-
-</body>
+<% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+<%= javascript_include_tag "application" %>
+  </body>
 </html>
